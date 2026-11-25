@@ -19,7 +19,8 @@ main{padding:28px;min-width:0}.top{display:flex;align-items:center;justify-conte
 @media(max-width:900px){.layout{grid-template-columns:1fr}.sidebar{display:none}main{padding:17px 12px 85px}.fields{grid-template-columns:repeat(2,minmax(0,1fr))}.stats{grid-template-columns:repeat(2,1fr)}.settingsgrid{grid-template-columns:1fr}.top{align-items:flex-start;flex-direction:column}.topright{width:100%;flex-wrap:wrap}}
 .mobilebar{position:fixed;bottom:0;left:0;right:0;background:#202c24;padding:10px;display:none;justify-content:space-around;z-index:5}.mobilebar button{border:0;background:transparent;color:#e5ede6;font-size:12px;padding:8px}
 @media(max-width:900px){.mobilebar{display:flex}}
-@media print{body{background:white}.sidebar,.topright,.actions,.settings,.mobilebar,.no-print{display:none!important}main{padding:0}.panel,.stat{box-shadow:none;border:0;padding:5px}.stats{grid-template-columns:repeat(4,1fr)}.tablebox{overflow:visible;border:0}table{min-width:0;table-layout:fixed}th,td{padding:4px;font-size:8px;word-break:break-word}.entry input,.entry select{display:none}.printtxt{display:inline!important}@page{size:landscape A4;margin:8mm}}
+#printSheet{display:none}
+@media print{ @page{size:A4 landscape;margin:7mm}body{background:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}.layout, .toast{display:none!important}#printSheet{display:block!important;width:100%;font-family:Arial,sans-serif;color:#111}.print-logo{font-family:Georgia,serif;font-style:italic;font-size:34px;font-weight:bold;text-align:center;letter-spacing:-2px;margin:0;line-height:1}.print-sheet h2{text-align:center;font-size:17px;margin:2px 0 3px}.print-sheet h3{text-align:center;font-size:14px;font-style:italic;text-decoration:underline;margin:2px 0 8px}.provider{font-size:10px;font-weight:bold;display:flex;justify-content:space-between;margin:0 0 3px}.official{width:100%;border-collapse:collapse;table-layout:fixed;min-width:0}.official th,.official td{border:1px solid #222;padding:3px 2px;font-size:8px;line-height:1.1;overflow-wrap:anywhere}.official th{background:#e8e8e8!important;text-align:center;font-weight:bold}.official td{height:17px}.official th:nth-child(1){width:3%}.official th:nth-child(2){width:18%}.official th:nth-child(3){width:9%}.official th:nth-child(4){width:8%}.official th:nth-child(5){width:9%}.official th:nth-child(6){width:13%}.official th:nth-child(7){width:8%}.official th:nth-child(8){width:9%}.official th:nth-child(9){width:11%}.print-foot{font-size:7px;text-align:right;margin-top:3px;color:#555}}
 .printtxt{display:none}
 </style>
 </head>
@@ -64,7 +65,15 @@ main{padding:28px;min-width:0}.top{display:flex;align-items:center;justify-conte
 </section>
 </main>
 </div>
-<div class="mobilebar"><button onclick="go('dashboard')">Dashboard</button><button onclick="go('records')">Records</button><button onclick="go('settings')">Settings</button></div><div class="toast" id="toast"></div>
+<div class="mobilebar"><button onclick="go('dashboard')">Dashboard</button><button onclick="go('records')">Records</button><button onclick="go('settings')">Settings</button></div><section id="printSheet" class="print-sheet">
+ <div class="print-logo">Fairmont</div>
+ <h2>BAB AL BAHR-ABU DHABI</h2>
+ <h3>Time Control Sheet For Task Force Staff</h3>
+ <div class="provider">Man Power Provider: Helicon Hospitality Services L.L.C.- S.P.C. <span>Date: <b id="printMonth"></b></span></div>
+ <table class="official"><thead><tr><th>Sl</th><th>Task force Staff Name</th><th>Date</th><th>Time IN</th><th>Signature</th><th>Department<br>(work for)</th><th>Time Out</th><th>Signature</th><th>Remarks</th></tr></thead><tbody id="printRows"></tbody></table>
+ <div class="print-foot">Duty record • Generated from entered records</div>
+</section>
+<div class="toast" id="toast"></div>
 <script>
 const $=id=>document.getElementById(id), monthNames=['January','February','March','April','May','June','July','August','September','October','November','December'];
 const baseR=['Fairmont hotel, aba al bahr','Shangrila hotel'],baseS=['Kitchen','Waiter / Service'];
@@ -95,7 +104,9 @@ function go(where){$('dashboard').style.display=where==='settings'?'none':'block
 $('month').innerHTML=monthNames.map((x,i)=>`<option value="${i}">${x}</option>`).join('');let today=new Date();$('month').value=today.getMonth();$('year').value=today.getFullYear();
 $('month').onchange=()=>{saveData();load()};$('year').onchange=()=>{saveData();load()};$('rate').onchange=()=>{recalc();saveData()};$('employee').onchange=()=>{saveSettings();toast('Employee name saved')};
 $('saveBtn').onclick=()=>{saveData();toast('Monthly record saved on this device')};
-$('pdfBtn').onclick=()=>{saveData();syncPrint();window.print()};
+function time12(value){if(!value)return '';let [h,m]=value.split(':').map(Number),ampm=h>=12?'PM':'AM';h=h%12||12;return `${h}:${String(m).padStart(2,'0')} ${ampm}`}
+function buildPrintSheet(){let entered=[];document.querySelectorAll('#body tr').forEach((tr,i)=>{let name=tr.querySelector('.nm').value.trim(),tin=tr.querySelector('.tin').value,tout=tr.querySelector('.tout').value,restaurant=tr.querySelector('.rest').value,section=tr.querySelector('.sect').value,other=tr.querySelector('.other').value,sig=tr.querySelector('.sig').value.trim();if(tin||tout||restaurant||section||other||name!==$('employee').value.trim()){entered.push({sl:i+1,name,date:`${String(i+1).padStart(2,'0')}/${String(+ $('month').value+1).padStart(2,'0')}/${$('year').value}`,tin:time12(tin),tout:time12(tout),restaurant,section,sig,other})}});$('printMonth').textContent=`${monthNames[+$('month').value]} ${$('year').value}`;let count=Math.max(entered.length,17);count=Math.min(count,31);let rows='';for(let i=0;i<count;i++){let x=entered[i];rows+=`<tr><td>${x?i+1:''}</td><td>${x?esc(x.name):''}</td><td>${x?esc(x.date):''}</td><td>${x?esc(x.tin):''}</td><td>${x?esc(x.sig):''}</td><td>${x?esc(x.section||x.restaurant):''}</td><td>${x?esc(x.tout):''}</td><td>${x?esc(x.sig):''}</td><td>${x?esc((x.other?`Other: AED ${x.other} `:'')+(x.restaurant&&x.section?x.restaurant+' / '+x.section:'')):''}</td></tr>`}$('printRows').innerHTML=rows}
+$('pdfBtn').onclick=()=>{saveData();buildPrintSheet();window.print()};
 $('addR').onclick=()=>{let v=$('newRestaurant').value.trim();if(v&&!restaurants.includes(v)){restaurants.push(v);saveSettings();$('newRestaurant').value='';load();toast('Restaurant added and saved')}};
 $('addS').onclick=()=>{let v=$('newSection').value.trim();if(v&&!sections.includes(v)){sections.push(v);saveSettings();$('newSection').value='';load();toast('Section added and saved')}};
 $('csvBtn').onclick=()=>{saveData();let rows=[['Day','Name','In','Out','Hours','Restaurant','Section','Wage AED','Other AED','Signature']];document.querySelectorAll('#body tr').forEach((tr,i)=>rows.push([i+1,tr.querySelector('.nm').value,tr.querySelector('.tin').value,tr.querySelector('.tout').value,tr.querySelector('.hrs').textContent,tr.querySelector('.rest').value,tr.querySelector('.sect').value,tr.querySelector('.wage').textContent,tr.querySelector('.other').value,tr.querySelector('.sig').value]));let blob=new Blob(['\ufeff'+rows.map(r=>r.map(x=>'"'+String(x??'').replace(/"/g,'""')+'"').join(',')).join('\r\n')],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`Mehedi-Duty-${$('year').value}-${+ $('month').value+1}.csv`;a.click();URL.revokeObjectURL(url)};
