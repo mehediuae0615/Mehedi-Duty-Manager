@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mehedi • Duty Manager</title>
+<style>
+:root{--bg:#f4f6f3;--card:#fff;--ink:#1f2a22;--muted:#778078;--gold:#b78a36;--green:#2f6848;--line:#e4e9e3;--soft:#e9f3eb}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 Inter,system-ui,-apple-system,Arial,sans-serif}
+.layout{display:grid;grid-template-columns:245px 1fr;min-height:100vh}.sidebar{background:#202c24;color:white;padding:25px 16px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column}
+.brand{padding:4px 12px 26px;border-bottom:1px solid #405047}.brand small{color:#d8bd7b;letter-spacing:2px;font-weight:700}.brand h2{margin:6px 0 0;font-size:22px}.nav{display:grid;gap:8px;margin-top:22px}.nav button{background:transparent;text-align:left;color:#dbe5dc;padding:12px;border-radius:10px;border:0;font-weight:600}.nav button.active,.nav button:hover{background:#35483b;color:#fff}.sidefoot{margin-top:auto;color:#aab8ad;font-size:12px;padding:12px}
+main{padding:28px;min-width:0}.top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px}.top h1{font-size:clamp(23px,3vw,32px);margin:0}.top p{margin:5px 0;color:var(--muted)}.topright{display:flex;gap:9px;align-items:center}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:17px;box-shadow:0 4px 16px #24332608}.panelhead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}.panelhead h2{font-size:17px;margin:0}.fields{display:grid;grid-template-columns:repeat(4,minmax(120px,1fr));gap:12px}.field label{display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:6px}.field input,.field select,.entry input,.entry select{width:100%;border:1px solid #dce3dc;border-radius:9px;background:#fff;padding:10px;color:var(--ink);font:inherit;min-width:0}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:17px}.stat{background:white;border:1px solid var(--line);border-radius:15px;padding:16px}.stat .label{font-size:12px;color:var(--muted)}.stat strong{display:block;font-size:25px;margin-top:6px}.stat em{font-style:normal;color:var(--green);font-size:12px}
+.btn{border:0;border-radius:10px;padding:10px 14px;font:600 14px inherit;cursor:pointer;background:#26372b;color:white}.btn.gold{background:var(--gold);color:#fff}.btn.soft{background:var(--soft);color:#28553a}.btn.red{background:#fae9e6;color:#8c3328}.btn.small{padding:8px 10px;font-size:12px}
+.actions{display:flex;gap:8px;flex-wrap:wrap}.tablebox{overflow:auto;border:1px solid var(--line);border-radius:12px}table{width:100%;border-collapse:collapse;min-width:1050px}th{background:#eef3ed;color:#4b5a4e;font-size:12px;text-align:left}th,td{padding:9px;border-bottom:1px solid #edf0ec}td{font-size:13px}.day{font-weight:800;text-align:center}.entry{width:100%;font:inherit;font-size:12px}.amount{font-weight:800;color:var(--green);white-space:nowrap}.note{color:var(--muted);font-size:12px;margin:10px 0 0}
+.settingsgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.list{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0}.chip{background:#f0f4ef;border:1px solid #e0e8df;border-radius:20px;padding:6px 10px;font-size:12px;display:flex;gap:7px;align-items:center}.chip button{border:0;background:none;color:#9b4a3c;cursor:pointer;font-weight:bold}.addline{display:flex;gap:8px}.addline input{flex:1;min-width:0;border:1px solid var(--line);border-radius:9px;padding:10px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#24372a;color:white;padding:12px 18px;border-radius:12px;display:none;z-index:9;box-shadow:0 8px 30px #0002}
+.mobilebar{display:none}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.sidebar{display:none}main{padding:17px 12px 85px}.fields{grid-template-columns:repeat(2,minmax(0,1fr))}.stats{grid-template-columns:repeat(2,1fr)}.settingsgrid{grid-template-columns:1fr}.top{align-items:flex-start;flex-direction:column}.topright{width:100%;flex-wrap:wrap}}
+.mobilebar{position:fixed;bottom:0;left:0;right:0;background:#202c24;padding:10px;display:none;justify-content:space-around;z-index:5}.mobilebar button{border:0;background:transparent;color:#e5ede6;font-size:12px;padding:8px}
+@media(max-width:900px){.mobilebar{display:flex}}
+@media print{body{background:white}.sidebar,.topright,.actions,.settings,.mobilebar,.no-print{display:none!important}main{padding:0}.panel,.stat{box-shadow:none;border:0;padding:5px}.stats{grid-template-columns:repeat(4,1fr)}.tablebox{overflow:visible;border:0}table{min-width:0;table-layout:fixed}th,td{padding:4px;font-size:8px;word-break:break-word}.entry input,.entry select{display:none}.printtxt{display:inline!important}@page{size:landscape A4;margin:8mm}}
+.printtxt{display:none}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+ <div class="brand"><small>DUTY WORKSPACE</small><h2>Mehedi Santo</h2></div>
+ <nav class="nav"><button class="active" onclick="go('dashboard')">▦ &nbsp; Dashboard</button><button onclick="go('records')">▤ &nbsp; Monthly Records</button><button onclick="go('settings')">⚙ &nbsp; Preferences</button></nav>
+ <div class="sidefoot">Personal duty & wage tracker<br>All times and amounts in AED</div>
+</aside>
+<main>
+<div class="top"><div><h1 id="pageTitle">Duty Dashboard</h1><p>Track your shifts, hours and daily earnings.</p></div><div class="topright"><button class="btn soft" id="saveBtn">Save records</button><button class="btn gold" id="pdfBtn">Export PDF</button></div></div>
+<section id="dashboard">
+<div class="panel">
+ <div class="panelhead"><h2>Monthly setup</h2><span class="note">Select month and pay rate</span></div>
+ <div class="fields">
+  <div class="field"><label>MONTH</label><select id="month"></select></div>
+  <div class="field"><label>YEAR</label><input id="year" type="number" min="2020" max="2100"></div>
+  <div class="field"><label>EMPLOYEE</label><input id="employee" value="Mehedi hasan santo"></div>
+  <div class="field"><label>HOURLY RATE (AED)</label><input id="rate" type="number" min="0" step=".25" value="8"></div>
+ </div>
+</div>
+<div class="stats">
+ <div class="stat"><div class="label">Duty days</div><strong id="statDays">0</strong><em>Days with a shift</em></div>
+ <div class="stat"><div class="label">Total hours</div><strong id="statHours">0.00</strong><em>Recorded shift time</em></div>
+ <div class="stat"><div class="label">Calculated wages</div><strong id="statWage">AED 0.00</strong><em>Hours × hourly rate</em></div>
+ <div class="stat"><div class="label">Other amount</div><strong id="statOther">AED 0.00</strong><em>Additional / deduction</em></div>
+</div>
+<div class="panel" id="records">
+ <div class="panelhead"><h2>Daily attendance</h2><div class="actions"><button class="btn soft small" id="csvBtn">Export CSV</button></div></div>
+ <div class="tablebox"><table><thead><tr><th>Day</th><th>Name</th><th>In time</th><th>Out time</th><th>Hours</th><th>Restaurant</th><th>Section</th><th>Wage (AED)</th><th>Other (AED)</th><th>Signature</th></tr></thead><tbody id="body"></tbody></table></div>
+ <p class="note">Shift crossing midnight is calculated correctly. Breaks are not automatically deducted. Enter a negative other amount for a deduction.</p>
+</div>
+</section>
+<section class="panel settings" id="settings" style="display:none">
+ <div class="panelhead"><h2>Preferences & saved options</h2></div>
+ <div class="settingsgrid">
+ <div><b>Restaurants</b><div class="list" id="restaurantList"></div><div class="addline"><input id="newRestaurant" placeholder="Add restaurant"><button class="btn gold" id="addR">Add</button></div></div>
+ <div><b>Work sections</b><div class="list" id="sectionList"></div><div class="addline"><input id="newSection" placeholder="Add section"><button class="btn gold" id="addS">Add</button></div></div>
+ </div>
+ <p class="note">New options are stored in this browser and appear in the duty dropdown next time.</p>
+</section>
+</main>
+</div>
+<div class="mobilebar"><button onclick="go('dashboard')">Dashboard</button><button onclick="go('records')">Records</button><button onclick="go('settings')">Settings</button></div><div class="toast" id="toast"></div>
+<script>
+const $=id=>document.getElementById(id), monthNames=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const baseR=['Fairmont hotel, aba al bahr','Shangrila hotel'],baseS=['Kitchen','Waiter / Service'];
+let restaurants=[],sections=[],timer;
+function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function monthKey(){return `mehedi-duty-v2-${$('year').value}-${$('month').value}`}
+function settings(){return JSON.parse(localStorage.getItem('mehedi-duty-settings-v2')||'{}')}
+function saveSettings(){localStorage.setItem('mehedi-duty-settings-v2',JSON.stringify({restaurants,sections,employee:$('employee').value,rate:$('rate').value}))}
+function readRows(){let o={};document.querySelectorAll('#body tr').forEach((tr,i)=>o[i+1]={name:tr.querySelector('.nm').value,in:tr.querySelector('.tin').value,out:tr.querySelector('.tout').value,restaurant:tr.querySelector('.rest').value,section:tr.querySelector('.sect').value,other:tr.querySelector('.other').value,signature:tr.querySelector('.sig').value});return o}
+function saveData(){localStorage.setItem(monthKey(),JSON.stringify(readRows()));saveSettings()}
+function daysInMonth(){return new Date(+$('year').value,+$('month').value+1,0).getDate()}
+function selectOpts(arr,selected){return `<option value="">Choose…</option>${arr.map(v=>`<option value="${esc(v)}" ${v===selected?'selected':''}>${esc(v)}</option>`).join('')}<option value="__add">＋ Add new option</option>`}
+function load(){
+ let s=settings();restaurants=[...new Set([...baseR,...(s.restaurants||[])])];sections=[...new Set([...baseS,...(s.sections||[])])];$('employee').value=s.employee||'Mehedi hasan santo';$('rate').value=s.rate??8;
+ let saved=JSON.parse(localStorage.getItem(monthKey())||'{}');$('body').innerHTML='';
+ for(let d=1;d<=daysInMonth();d++){let x=saved[d]||{},tr=document.createElement('tr');tr.innerHTML=`<td class="day">${String(d).padStart(2,'0')}</td><td class="entry"><input class="nm" value="${esc(x.name??$('employee').value)}"><span class="printtxt"></span></td><td class="entry"><input class="tin" type="time" value="${esc(x.in||'')}"><span class="printtxt"></span></td><td class="entry"><input class="tout" type="time" value="${esc(x.out||'')}"><span class="printtxt"></span></td><td class="hrs amount">0.00</td><td class="entry"><select class="rest">${selectOpts(restaurants,x.restaurant||'')}</select><span class="printtxt"></span></td><td class="entry"><select class="sect">${selectOpts(sections,x.section||'')}</select><span class="printtxt"></span></td><td class="wage amount">0.00</td><td class="entry"><input class="other" type="number" step=".01" placeholder="0.00" value="${esc(x.other||'')}"><span class="printtxt"></span></td><td class="entry"><input class="sig" value="${esc(x.signature??'Mehedi')}"><span class="printtxt"></span></td>`;
+ $('body').append(tr);
+ tr.querySelectorAll('input,select').forEach(el=>el.addEventListener('change',()=>{if(el.matches('select')&&el.value==='__add'){addInline(el);return}recalc();saveData()}));
+ }renderLists();recalc();
+}
+function addInline(sel){let type=sel.classList.contains('rest')?'restaurant':'section',v=prompt('Enter new '+type+' name:');if(!v||!v.trim()){sel.value='';return}v=v.trim();let arr=type==='restaurant'?restaurants:sections;if(!arr.includes(v))arr.push(v);sel.innerHTML=selectOpts(arr,v);saveSettings();renderLists();recalc();saveData()}
+function recalc(){let n=0,hours=0,wages=0,other=0,rate=Number($('rate').value)||0;document.querySelectorAll('#body tr').forEach(tr=>{let a=tr.querySelector('.tin').value,b=tr.querySelector('.tout').value,h=0;if(a&&b){let [ah,am]=a.split(':').map(Number),[bh,bm]=b.split(':').map(Number),diff=bh*60+bm-(ah*60+am);if(diff<0)diff+=1440;h=diff/60;n++}let w=h*rate,o=Number(tr.querySelector('.other').value)||0;hours+=h;wages+=w;other+=o;tr.querySelector('.hrs').textContent=h.toFixed(2);tr.querySelector('.wage').textContent=w.toFixed(2)});$('statDays').textContent=n;$('statHours').textContent=hours.toFixed(2);$('statWage').textContent='AED '+wages.toFixed(2);$('statOther').textContent='AED '+other.toFixed(2);syncPrint()}
+function syncPrint(){document.querySelectorAll('#body tr').forEach(tr=>tr.querySelectorAll('input,select').forEach(el=>{let sp=el.nextElementSibling;if(sp&&sp.classList.contains('printtxt'))sp.textContent=el.tagName==='SELECT'?el.value:el.value}))}
+function renderLists(){for(let [id,arr,type] of [['restaurantList',restaurants,'restaurant'],['sectionList',sections,'section']])$(id).innerHTML=arr.map(v=>`<span class="chip">${esc(v)} <button title="Remove" onclick="removeOption('${type}',${JSON.stringify(v).replace(/"/g,'&quot;')})">×</button></span>`).join('')}
+function removeOption(type,v){let arr=type==='restaurant'?restaurants:sections;arr=arr.filter(x=>x!==v);if(type==='restaurant')restaurants=arr;else sections=arr;saveSettings();load()}
+function toast(msg){$('toast').textContent=msg;$('toast').style.display='block';clearTimeout(timer);timer=setTimeout(()=>$('toast').style.display='none',2300)}
+function go(where){$('dashboard').style.display=where==='settings'?'none':'block';$('settings').style.display=where==='settings'?'block':'none';$('pageTitle').textContent=where==='settings'?'Preferences':'Duty Dashboard';document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.textContent.toLowerCase().includes(where==='settings'?'preferences':where==='records'?'monthly':'dashboard')));if(where==='records')document.getElementById('records').scrollIntoView({behavior:'smooth'})}
+$('month').innerHTML=monthNames.map((x,i)=>`<option value="${i}">${x}</option>`).join('');let today=new Date();$('month').value=today.getMonth();$('year').value=today.getFullYear();
+$('month').onchange=()=>{saveData();load()};$('year').onchange=()=>{saveData();load()};$('rate').onchange=()=>{recalc();saveData()};$('employee').onchange=()=>{saveSettings();toast('Employee name saved')};
+$('saveBtn').onclick=()=>{saveData();toast('Monthly record saved on this device')};
+$('pdfBtn').onclick=()=>{saveData();syncPrint();window.print()};
+$('addR').onclick=()=>{let v=$('newRestaurant').value.trim();if(v&&!restaurants.includes(v)){restaurants.push(v);saveSettings();$('newRestaurant').value='';load();toast('Restaurant added and saved')}};
+$('addS').onclick=()=>{let v=$('newSection').value.trim();if(v&&!sections.includes(v)){sections.push(v);saveSettings();$('newSection').value='';load();toast('Section added and saved')}};
+$('csvBtn').onclick=()=>{saveData();let rows=[['Day','Name','In','Out','Hours','Restaurant','Section','Wage AED','Other AED','Signature']];document.querySelectorAll('#body tr').forEach((tr,i)=>rows.push([i+1,tr.querySelector('.nm').value,tr.querySelector('.tin').value,tr.querySelector('.tout').value,tr.querySelector('.hrs').textContent,tr.querySelector('.rest').value,tr.querySelector('.sect').value,tr.querySelector('.wage').textContent,tr.querySelector('.other').value,tr.querySelector('.sig').value]));let blob=new Blob(['\ufeff'+rows.map(r=>r.map(x=>'"'+String(x??'').replace(/"/g,'""')+'"').join(',')).join('\r\n')],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`Mehedi-Duty-${$('year').value}-${+ $('month').value+1}.csv`;a.click();URL.revokeObjectURL(url)};
+load();
+</script>
+</body></html>
