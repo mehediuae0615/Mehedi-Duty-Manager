@@ -8,7 +8,7 @@
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 Inter,system-ui,-apple-system,Arial,sans-serif}
 .layout{display:grid;grid-template-columns:245px 1fr;min-height:100vh}.sidebar{background:#202c24;color:white;padding:25px 16px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column}
 .brand{padding:4px 12px 26px;border-bottom:1px solid #405047}.brand small{color:#d8bd7b;letter-spacing:2px;font-weight:700}.brand h2{margin:6px 0 0;font-size:22px}.nav{display:grid;gap:8px;margin-top:22px}.nav button{background:transparent;text-align:left;color:#dbe5dc;padding:12px;border-radius:10px;border:0;font-weight:600}.nav button.active,.nav button:hover{background:#35483b;color:#fff}.sidefoot{margin-top:auto;color:#aab8ad;font-size:12px;padding:12px}
-main{padding:28px;min-width:0}.top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px}.top h1{font-size:clamp(23px,3vw,32px);margin:0}.top p{margin:5px 0;color:var(--muted)}.topright{display:flex;gap:9px;align-items:center}
+main{padding:28px;min-width:0}.top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px}.top h1{font-size:clamp(23px,3vw,32px);margin:0}.top p{margin:5px 0;color:var(--muted)}.topright{display:flex;gap:9px;align-items:center}.backup-note{background:#fff8e9;border:1px solid #f0dfb9;border-radius:12px;padding:12px 14px;color:#70571f;font-size:13px;margin:0 0 16px}
 .panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:17px;box-shadow:0 4px 16px #24332608}.panelhead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}.panelhead h2{font-size:17px;margin:0}.fields{display:grid;grid-template-columns:repeat(4,minmax(120px,1fr));gap:12px}.field label{display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:6px}.field input,.field select,.entry input,.entry select{width:100%;border:1px solid #dce3dc;border-radius:9px;background:#fff;padding:10px;color:var(--ink);font:inherit;min-width:0}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:17px}.stat{background:white;border:1px solid var(--line);border-radius:15px;padding:16px}.stat .label{font-size:12px;color:var(--muted)}.stat strong{display:block;font-size:25px;margin-top:6px}.stat em{font-style:normal;color:var(--green);font-size:12px}
 .btn{border:0;border-radius:10px;padding:10px 14px;font:600 14px inherit;cursor:pointer;background:#26372b;color:white}.btn.gold{background:var(--gold);color:#fff}.btn.soft{background:var(--soft);color:#28553a}.btn.red{background:#fae9e6;color:#8c3328}.btn.small{padding:8px 10px;font-size:12px}
@@ -20,7 +20,7 @@ main{padding:28px;min-width:0}.top{display:flex;align-items:center;justify-conte
 .mobilebar{position:fixed;bottom:0;left:0;right:0;background:#202c24;padding:10px;display:none;justify-content:space-around;z-index:5}.mobilebar button{border:0;background:transparent;color:#e5ede6;font-size:12px;padding:8px}
 @media(max-width:900px){.mobilebar{display:flex}}
 #printSheet{display:none}
-@media print{ @page{size:A4 landscape;margin:7mm}body{background:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}.layout, .toast{display:none!important}#printSheet{display:block!important;width:100%;font-family:Arial,sans-serif;color:#111}.print-logo{font-family:Georgia,serif;font-style:italic;font-size:34px;font-weight:bold;text-align:center;letter-spacing:-2px;margin:0;line-height:1}.print-sheet h2{text-align:center;font-size:17px;margin:2px 0 3px}.print-sheet h3{text-align:center;font-size:14px;font-style:italic;text-decoration:underline;margin:2px 0 8px}.provider{font-size:10px;font-weight:bold;display:flex;justify-content:space-between;margin:0 0 3px}.official{width:100%;border-collapse:collapse;table-layout:fixed;min-width:0}.official th,.official td{border:1px solid #222;padding:3px 2px;font-size:8px;line-height:1.1;overflow-wrap:anywhere}.official th{background:#e8e8e8!important;text-align:center;font-weight:bold}.official td{height:17px}.official th:nth-child(1){width:3%}.official th:nth-child(2){width:18%}.official th:nth-child(3){width:9%}.official th:nth-child(4){width:8%}.official th:nth-child(5){width:9%}.official th:nth-child(6){width:13%}.official th:nth-child(7){width:8%}.official th:nth-child(8){width:9%}.official th:nth-child(9){width:11%}.print-foot{font-size:7px;text-align:right;margin-top:3px;color:#555}}
+@media print{ @page{size:A4 landscape;margin:5mm}body{background:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}.layout, .toast{display:none!important}#printSheet{display:block!important;width:100%;font-family:Arial,sans-serif;color:#111}.pdf-duty-title{text-align:center;font-size:12px;font-weight:800;letter-spacing:1.2px;margin:0 0 5px}.print-logo{font-family:Georgia,serif;font-style:italic;font-size:34px;font-weight:bold;text-align:center;letter-spacing:-2px;margin:0;line-height:1}.print-sheet h2{text-align:center;font-size:17px;margin:2px 0 3px}.print-sheet h3{text-align:center;font-size:14px;font-style:italic;text-decoration:underline;margin:2px 0 8px}.provider{font-size:10px;font-weight:bold;display:flex;justify-content:space-between;margin:0 0 3px}.official{width:100%;border-collapse:collapse;table-layout:fixed;min-width:0}.official th,.official td{border:1px solid #222;padding:3px 2px;font-size:8px;line-height:1.1;overflow-wrap:anywhere}.official th{background:#e8e8e8!important;text-align:center;font-weight:bold}.official td{height:15px}.print-sheet{break-inside:avoid;page-break-inside:avoid}.official tr{break-inside:avoid;page-break-inside:avoid}.official th:nth-child(1){width:3%}.official th:nth-child(2){width:18%}.official th:nth-child(3){width:9%}.official th:nth-child(4){width:8%}.official th:nth-child(5){width:9%}.official th:nth-child(6){width:13%}.official th:nth-child(7){width:8%}.official th:nth-child(8){width:9%}.official th:nth-child(9){width:11%}.print-foot{font-size:7px;text-align:right;margin-top:3px;color:#555}}
 .printtxt{display:none}
 </style>
 </head>
@@ -32,8 +32,8 @@ main{padding:28px;min-width:0}.top{display:flex;align-items:center;justify-conte
  <div class="sidefoot">Personal duty & wage tracker<br>All times and amounts in AED</div>
 </aside>
 <main>
-<div class="top"><div><h1 id="pageTitle">Duty Dashboard</h1><p>Track your shifts, hours and daily earnings.</p></div><div class="topright"><button class="btn soft" id="saveBtn">Save records</button><button class="btn gold" id="pdfBtn">Export PDF</button></div></div>
-<section id="dashboard">
+<div class="top"><div><h1 id="pageTitle">Duty Dashboard</h1><p>Track your shifts, hours and daily earnings.</p></div><div class="topright"><button class="btn soft" id="saveBtn">Save records</button><button class="btn soft" id="backupBtn">Backup all data</button><button class="btn soft" id="restoreBtn">Restore backup</button><input id="backupFile" type="file" accept=".json,application/json" hidden><button class="btn gold" id="pdfBtn">Export PDF</button></div></div>
+<section id="dashboard"><div class="backup-note">🔐 Records save automatically in this browser. For extra safety, tap <b>Backup all data</b> regularly and keep the JSON file in iPhone Files or Google Drive. Restore it if browser data is lost.</div>
 <div class="panel">
  <div class="panelhead"><h2>Monthly setup</h2><span class="note">Select month and pay rate</span></div>
  <div class="fields">
@@ -61,14 +61,14 @@ main{padding:28px;min-width:0}.top{display:flex;align-items:center;justify-conte
  <div><b>Restaurants</b><div class="list" id="restaurantList"></div><div class="addline"><input id="newRestaurant" placeholder="Add restaurant"><button class="btn gold" id="addR">Add</button></div></div>
  <div><b>Work sections</b><div class="list" id="sectionList"></div><div class="addline"><input id="newSection" placeholder="Add section"><button class="btn gold" id="addS">Add</button></div></div>
  </div>
- <p class="note">New options are stored in this browser and appear in the duty dropdown next time.</p>
+ <p class="note">New options are stored in this browser and appear in the duty dropdown next time. Use Backup all data to download all months as a JSON file, and Restore backup to recover it.</p>
 </section>
 </main>
 </div>
 <div class="mobilebar"><button onclick="go('dashboard')">Dashboard</button><button onclick="go('records')">Records</button><button onclick="go('settings')">Settings</button></div><section id="printSheet" class="print-sheet">
  <div class="print-logo">Fairmont</div>
  <h2>BAB AL BAHR-ABU DHABI</h2>
- <h3>Time Control Sheet For Task Force Staff</h3>
+ <h3>Time Control Sheet For Task Force Staff</h3><div class="pdf-duty-title">DAILY DUTY RECORD</div>
  <div class="provider">Man Power Provider: Helicon Hospitality Services L.L.C.- S.P.C. <span>Date: <b id="printMonth"></b></span></div>
  <table class="official"><thead><tr><th>Sl</th><th>Task force Staff Name</th><th>Date</th><th>Time IN</th><th>Signature</th><th>Department<br>(work for)</th><th>Time Out</th><th>Signature</th><th>Remarks</th></tr></thead><tbody id="printRows"></tbody></table>
  <div class="print-foot">Duty record • Generated from entered records</div>
@@ -83,7 +83,7 @@ function monthKey(){return `mehedi-duty-v2-${$('year').value}-${$('month').value
 function settings(){return JSON.parse(localStorage.getItem('mehedi-duty-settings-v2')||'{}')}
 function saveSettings(){localStorage.setItem('mehedi-duty-settings-v2',JSON.stringify({restaurants,sections,employee:$('employee').value,rate:$('rate').value}))}
 function readRows(){let o={};document.querySelectorAll('#body tr').forEach((tr,i)=>o[i+1]={name:tr.querySelector('.nm').value,in:tr.querySelector('.tin').value,out:tr.querySelector('.tout').value,restaurant:tr.querySelector('.rest').value,section:tr.querySelector('.sect').value,other:tr.querySelector('.other').value,signature:tr.querySelector('.sig').value});return o}
-function saveData(){localStorage.setItem(monthKey(),JSON.stringify(readRows()));saveSettings()}
+function saveData(){localStorage.setItem(monthKey(),JSON.stringify(readRows()));saveSettings();try{localStorage.setItem("mehedi-duty-last-snapshot-v1",JSON.stringify({savedAt:new Date().toISOString(),monthKey:monthKey(),rows:readRows()}))}catch(e){console.warn("Local snapshot could not be stored",e)}}
 function daysInMonth(){return new Date(+$('year').value,+$('month').value+1,0).getDate()}
 function selectOpts(arr,selected){return `<option value="">Choose…</option>${arr.map(v=>`<option value="${esc(v)}" ${v===selected?'selected':''}>${esc(v)}</option>`).join('')}<option value="__add">＋ Add new option</option>`}
 function load(){
@@ -104,8 +104,33 @@ function go(where){$('dashboard').style.display=where==='settings'?'none':'block
 $('month').innerHTML=monthNames.map((x,i)=>`<option value="${i}">${x}</option>`).join('');let today=new Date();$('month').value=today.getMonth();$('year').value=today.getFullYear();
 $('month').onchange=()=>{saveData();load()};$('year').onchange=()=>{saveData();load()};$('rate').onchange=()=>{recalc();saveData()};$('employee').onchange=()=>{saveSettings();toast('Employee name saved')};
 $('saveBtn').onclick=()=>{saveData();toast('Monthly record saved on this device')};
+
+function downloadJSON(data,filename){let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1200)}
+function createBackup(){saveData();let records={};for(let i=0;i<localStorage.length;i++){let k=localStorage.key(i);if(k&&k.startsWith('mehedi-duty-v2-'))records[k]=localStorage.getItem(k)}let payload={app:'Mehedi Duty Manager',formatVersion:1,createdAt:new Date().toISOString(),settings:localStorage.getItem('mehedi-duty-settings-v2')||'{}',records};downloadJSON(payload,`Mehedi-Duty-Backup-${new Date().toISOString().slice(0,10)}.json`);toast(`Backup exported (${Object.keys(records).length} monthly record sets)`)}
+function restoreBackup(file){let reader=new FileReader();reader.onload=()=>{try{let data=JSON.parse(reader.result);if(data.app!=='Mehedi Duty Manager'||data.formatVersion!==1||!data.records||typeof data.records!=='object')throw Error('This is not a valid Duty Manager backup.');if(!confirm('Restore this backup? This will replace saved duty records and settings in this browser. Export a current backup first if you want to keep them.'))return;let keys=[];for(let i=0;i<localStorage.length;i++){let k=localStorage.key(i);if(k&&(k.startsWith('mehedi-duty-v2-')||k==='mehedi-duty-settings-v2'))keys.push(k)}keys.forEach(k=>localStorage.removeItem(k));Object.entries(data.records).forEach(([k,v])=>{if(/^mehedi-duty-v2-\d{4}-\d{1,2}$/.test(k)&&typeof v==='string')localStorage.setItem(k,v)});if(typeof data.settings==='string')localStorage.setItem('mehedi-duty-settings-v2',data.settings);load();toast('Backup restored successfully')}catch(err){alert('Could not restore backup: '+err.message)}};reader.onerror=()=>alert('Unable to read backup file.');reader.readAsText(file)}
+$('backupBtn').onclick=createBackup;$('restoreBtn').onclick=()=>$('backupFile').click();$('backupFile').onchange=e=>{if(e.target.files&&e.target.files[0])restoreBackup(e.target.files[0]);e.target.value=''};
+
 function time12(value){if(!value)return '';let [h,m]=value.split(':').map(Number),ampm=h>=12?'PM':'AM';h=h%12||12;return `${h}:${String(m).padStart(2,'0')} ${ampm}`}
-function buildPrintSheet(){let entered=[];document.querySelectorAll('#body tr').forEach((tr,i)=>{let name=tr.querySelector('.nm').value.trim(),tin=tr.querySelector('.tin').value,tout=tr.querySelector('.tout').value,restaurant=tr.querySelector('.rest').value,section=tr.querySelector('.sect').value,other=tr.querySelector('.other').value,sig=tr.querySelector('.sig').value.trim();if(tin||tout||restaurant||section||other||name!==$('employee').value.trim()){entered.push({sl:i+1,name,date:`${String(i+1).padStart(2,'0')}/${String(+ $('month').value+1).padStart(2,'0')}/${$('year').value}`,tin:time12(tin),tout:time12(tout),restaurant,section,sig,other})}});$('printMonth').textContent=`${monthNames[+$('month').value]} ${$('year').value}`;let count=Math.max(entered.length,17);count=Math.min(count,31);let rows='';for(let i=0;i<count;i++){let x=entered[i];rows+=`<tr><td>${x?i+1:''}</td><td>${x?esc(x.name):''}</td><td>${x?esc(x.date):''}</td><td>${x?esc(x.tin):''}</td><td>${x?esc(x.sig):''}</td><td>${x?esc(x.section||x.restaurant):''}</td><td>${x?esc(x.tout):''}</td><td>${x?esc(x.sig):''}</td><td>${x?esc((x.other?`Other: AED ${x.other} `:'')+(x.restaurant&&x.section?x.restaurant+' / '+x.section:'')):''}</td></tr>`}$('printRows').innerHTML=rows}
+function buildPrintSheet(){
+ let entered=[];
+ document.querySelectorAll('#body tr').forEach((tr,i)=>{
+  let name=tr.querySelector('.nm').value.trim(),tin=tr.querySelector('.tin').value,tout=tr.querySelector('.tout').value,
+  restaurant=tr.querySelector('.rest').value,section=tr.querySelector('.sect').value,
+  other=tr.querySelector('.other').value,sig=tr.querySelector('.sig').value.trim();
+  // Only actual duty information counts; preset name/signature alone is not an entry.
+  if(tin||tout||restaurant||section||other){
+   entered.push({sl:entered.length+1,name,date:`${String(i+1).padStart(2,'0')}/${String(+$('month').value+1).padStart(2,'0')}/${$('year').value}`,
+    tin:time12(tin),tout:time12(tout),restaurant,section,sig,other});
+  }
+ });
+ $('printMonth').textContent=`${monthNames[+$('month').value]} ${$('year').value}`;
+ let rows='';
+ entered.forEach(x=>{
+  let dept=x.section||x.restaurant,remarks=(x.restaurant&&x.section?x.restaurant+' / '+x.section:'')+(x.other?` • Other: AED ${x.other}`:'');
+  rows+=`<tr><td>${x.sl}</td><td>${esc(x.name||$('employee').value)}</td><td>${esc(x.date)}</td><td>${esc(x.tin)}</td><td>${esc(x.sig||'Mehedi')}</td><td>${esc(dept)}</td><td>${esc(x.tout)}</td><td>${esc(x.sig||'Mehedi')}</td><td>${esc(remarks)}</td></tr>`;
+ });
+ $('printRows').innerHTML=rows||'<tr><td colspan="9" style="text-align:center;padding:12px">No duty entries completed for this month</td></tr>';
+}
 $('pdfBtn').onclick=()=>{saveData();buildPrintSheet();window.print()};
 $('addR').onclick=()=>{let v=$('newRestaurant').value.trim();if(v&&!restaurants.includes(v)){restaurants.push(v);saveSettings();$('newRestaurant').value='';load();toast('Restaurant added and saved')}};
 $('addS').onclick=()=>{let v=$('newSection').value.trim();if(v&&!sections.includes(v)){sections.push(v);saveSettings();$('newSection').value='';load();toast('Section added and saved')}};

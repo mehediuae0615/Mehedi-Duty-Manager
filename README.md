@@ -1,13 +1,9 @@
-# Mehedi Duty Manager
+# Mehedi Duty Manager — Backup Update
 
-Static GitHub Pages duty and wage tracker.
+Upload `index.html` to the root of your GitHub Pages repository, replacing the existing file.
 
-## Publish
-1. Create/open your GitHub repository.
-2. Upload `index.html` to the repository root (or upload this ZIP and extract it first).
-3. In **Settings → Pages**, choose **Deploy from a branch**, select `main` and `/ (root)`, then Save.
-4. Open the Pages URL.
-
-Data and saved custom dropdown options are stored in the browser's local storage on that device/browser. Use **Export PDF** monthly and **Export CSV** for a spreadsheet backup. PDF button opens the browser print dialog; choose Save as PDF / Save to Files.
-
-Hourly wage defaults to AED 8. Total pay is hours × hourly rate; the Other amount field can hold a bonus or a negative deduction. Breaks are not deducted automatically.
+## Data safety
+- Entries continue saving to the browser automatically.
+- **Backup all data** downloads a JSON backup containing every month stored by this app plus preferences/custom dropdowns. Save it in iPhone Files or Google Drive.
+- **Restore backup** imports that JSON. Restore replaces the current app's stored records/settings, so make a fresh backup first if you need both.
+- The backup is a user-managed file; this static GitHub Pages version does not yet have account-based cloud sync. Browser local data is not a substitute for an external backup.
