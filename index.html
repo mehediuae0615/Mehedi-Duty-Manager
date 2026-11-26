@@ -20,7 +20,7 @@ main{padding:28px;min-width:0}.top{display:flex;align-items:center;justify-conte
 .mobilebar{position:fixed;bottom:0;left:0;right:0;background:#202c24;padding:10px;display:none;justify-content:space-around;z-index:5}.mobilebar button{border:0;background:transparent;color:#e5ede6;font-size:12px;padding:8px}
 @media(max-width:900px){.mobilebar{display:flex}}
 #printSheet{display:none}
-@media print{ @page{size:A4 landscape;margin:5mm}body{background:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}.layout, .toast{display:none!important}#printSheet{display:block!important;width:100%;font-family:Arial,sans-serif;color:#111}.pdf-duty-title{text-align:center;font-size:12px;font-weight:800;letter-spacing:1.2px;margin:0 0 5px}.print-logo{font-family:Georgia,serif;font-style:italic;font-size:34px;font-weight:bold;text-align:center;letter-spacing:-2px;margin:0;line-height:1}.print-sheet h2{text-align:center;font-size:17px;margin:2px 0 3px}.print-sheet h3{text-align:center;font-size:14px;font-style:italic;text-decoration:underline;margin:2px 0 8px}.provider{font-size:10px;font-weight:bold;display:flex;justify-content:space-between;margin:0 0 3px}.official{width:100%;border-collapse:collapse;table-layout:fixed;min-width:0}.official th,.official td{border:1px solid #222;padding:3px 2px;font-size:8px;line-height:1.1;overflow-wrap:anywhere}.official th{background:#e8e8e8!important;text-align:center;font-weight:bold}.official td{height:15px}.print-sheet{break-inside:avoid;page-break-inside:avoid}.official tr{break-inside:avoid;page-break-inside:avoid}.official th:nth-child(1){width:3%}.official th:nth-child(2){width:18%}.official th:nth-child(3){width:9%}.official th:nth-child(4){width:8%}.official th:nth-child(5){width:9%}.official th:nth-child(6){width:13%}.official th:nth-child(7){width:8%}.official th:nth-child(8){width:9%}.official th:nth-child(9){width:11%}.print-foot{font-size:7px;text-align:right;margin-top:3px;color:#555}}
+@media print{ @page{size:A4 landscape;margin:5mm}body{background:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}.layout, .toast{display:none!important}#printSheet{display:block!important;width:100%;font-family:Arial,sans-serif;color:#111}.pdf-duty-title{text-align:center;font-size:12px;font-weight:800;letter-spacing:1.2px;margin:0 0 5px}.print-logo{font-family:Georgia,serif;font-style:italic;font-size:34px;font-weight:bold;text-align:center;letter-spacing:-2px;margin:0;line-height:1}.print-sheet h2{text-align:center;font-size:17px;margin:2px 0 3px}.print-sheet h3{text-align:center;font-size:14px;font-style:italic;text-decoration:underline;margin:2px 0 8px}.provider{font-size:10px;font-weight:bold;display:flex;justify-content:space-between;margin:0 0 3px}.official{width:100%;border-collapse:collapse;table-layout:fixed;min-width:0}.official th,.official td{border:1px solid #222;padding:3px 2px;font-size:8px;line-height:1.1;overflow-wrap:anywhere}.official th{background:#e8e8e8!important;text-align:center;font-weight:bold}.official td{height:15px}.print-sheet{break-inside:avoid;page-break-inside:avoid}.official tr{break-inside:avoid;page-break-inside:avoid}.official th:nth-child(1){width:3%}.official th:nth-child(2){width:18%}.official th:nth-child(3){width:9%}.official th:nth-child(4){width:8%}.official th:nth-child(5){width:9%}.official th:nth-child(6){width:10%}.official th:nth-child(7){width:10%}.official th:nth-child(8){width:8%}.official th:nth-child(9){width:9%}.official th:nth-child(10){width:10%}.print-summary{margin-top:5px;border:1px solid #222;padding:4px 7px;display:grid;grid-template-columns:repeat(4,1fr);gap:6px;font-size:9px;font-weight:bold}.print-summary span{font-weight:normal}.print-foot{font-size:7px;text-align:right;margin-top:3px;color:#555}}
 .printtxt{display:none}
 </style>
 </head>
@@ -33,6 +33,15 @@ main{padding:28px;min-width:0}.top{display:flex;align-items:center;justify-conte
 </aside>
 <main>
 <div class="top"><div><h1 id="pageTitle">Duty Dashboard</h1><p>Track your shifts, hours and daily earnings.</p></div><div class="topright"><button class="btn soft" id="saveBtn">Save records</button><button class="btn soft" id="backupBtn">Backup all data</button><button class="btn soft" id="restoreBtn">Restore backup</button><input id="backupFile" type="file" accept=".json,application/json" hidden><button class="btn gold" id="pdfBtn">Export PDF</button></div></div>
+<section class="panel" id="cloudPanel" style="border-color:#b9d7c1;background:#f7fff8;margin-bottom:16px">
+ <div class="panelhead"><h2>☁️ Cloud PIN Sync</h2><span id="cloudStatus" class="note">Not connected — sign in to sync online</span></div>
+ <div class="fields" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+  <div class="field"><label>EMPLOYEE NAME</label><input id="cloudName" placeholder="Name given by manager"></div>
+  <div class="field"><label>6–12 DIGIT PIN</label><input id="cloudPin" type="password" inputmode="numeric" maxlength="12" placeholder="Employee PIN"></div>
+  <div class="field"><label>INVITATION (REGISTER ONLY)</label><input id="cloudInvite" placeholder="Manager invitation token"></div>
+  <div class="field" style="display:flex;align-items:end;gap:6px"><button class="btn gold" id="cloudLogin">PIN Login</button><button class="btn soft" id="cloudRegister">Register</button><button class="btn red small" id="cloudLogout" style="display:none">Logout</button></div>
+ </div><p class="note">Sign in once on this phone. Cloud duty entries stay saved even if browser data is cleared; after clearing it, enter your PIN again.</p>
+</section>
 <section id="dashboard"><div class="backup-note">🔐 Records save automatically in this browser. For extra safety, tap <b>Backup all data</b> regularly and keep the JSON file in iPhone Files or Google Drive. Restore it if browser data is lost.</div>
 <div class="panel">
  <div class="panelhead"><h2>Monthly setup</h2><span class="note">Select month and pay rate</span></div>
@@ -70,7 +79,8 @@ main{padding:28px;min-width:0}.top{display:flex;align-items:center;justify-conte
  <h2>BAB AL BAHR-ABU DHABI</h2>
  <h3>Time Control Sheet For Task Force Staff</h3><div class="pdf-duty-title">DAILY DUTY RECORD</div>
  <div class="provider">Man Power Provider: Helicon Hospitality Services L.L.C.- S.P.C. <span>Date: <b id="printMonth"></b></span></div>
- <table class="official"><thead><tr><th>Sl</th><th>Task force Staff Name</th><th>Date</th><th>Time IN</th><th>Signature</th><th>Department<br>(work for)</th><th>Time Out</th><th>Signature</th><th>Remarks</th></tr></thead><tbody id="printRows"></tbody></table>
+ <table class="official"><thead><tr><th>Sl</th><th>Task force Staff Name</th><th>Date</th><th>Time IN</th><th>Signature</th><th>Restaurant</th><th>Section</th><th>Time Out</th><th>Signature</th><th>Remarks</th></tr></thead><tbody id="printRows"></tbody></table>
+ <div id="printSummary" class="print-summary"></div>
  <div class="print-foot">Duty record • Generated from entered records</div>
 </section>
 <div class="toast" id="toast"></div>
@@ -79,11 +89,32 @@ const $=id=>document.getElementById(id), monthNames=['January','February','March
 const baseR=['Fairmont hotel, aba al bahr','Shangrila hotel'],baseS=['Kitchen','Waiter / Service'];
 let restaurants=[],sections=[],timer;
 function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+const CLOUD_ENDPOINT='https://lnnvtspahdprvcjcoiur.supabase.co/functions/v1/smooth-action';
+const CLOUD_TOKEN_KEY='mehedi-duty-cloud-session-v1',CLOUD_PROFILE_KEY='mehedi-duty-cloud-profile-v1';
+let cloudSession=localStorage.getItem(CLOUD_TOKEN_KEY)||'',cloudProfile=JSON.parse(localStorage.getItem(CLOUD_PROFILE_KEY)||'null'),cloudTimer=null,cloudBusy=false;
+function cloudStatus(text){$('cloudStatus').textContent=text}
+async function cloudRequest(path,method='GET',data){const headers={};if(cloudSession)headers.Authorization='Bearer '+cloudSession;if(data!==undefined)headers['Content-Type']='application/json';const r=await fetch(CLOUD_ENDPOINT+path,{method,headers,body:data===undefined?undefined:JSON.stringify(data)});let result={};try{result=await r.json()}catch{}if(!r.ok)throw Error(result.error||('Cloud request failed ('+r.status+')'));return result}
+function cloudEntry(row,day){return !!(row.in||row.out||row.restaurant||row.section||row.other)}
+function queueCloudSave(){if(!cloudSession)return;clearTimeout(cloudTimer);cloudTimer=setTimeout(()=>cloudSyncCurrent(false).catch(e=>cloudStatus('Cloud sync pending: '+e.message)),1800)}
+async function cloudSyncCurrent(pullFirst=false){if(!cloudSession||cloudBusy)return;cloudBusy=true;try{let month=`${$('year').value}-${String(+$('month').value+1).padStart(2,'0')}`;if(pullFirst){await cloudPull(month)}
+ let local=JSON.parse(localStorage.getItem(monthKey())||'{}'),name=$('employee').value.trim()||cloudProfile?.employee_name||'Employee',rate=Number($('rate').value)||8;
+ for(let day=1;day<=daysInMonth();day++){let x=local[day]||{};if(!cloudEntry(x,day))continue;let date=`${$('year').value}-${String(+$('month').value+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`,hours=0;if(x.in&&x.out){let [a,b]=[x.in,x.out].map(v=>v.split(':').map(Number)),d=b[0]*60+b[1]-a[0]*60-a[1];if(d<0)d+=1440;hours=d/60}
+ await cloudRequest('/duties','POST',{duty_date:date,employee_name:name,time_in:x.in||null,time_out:x.out||null,restaurant:x.restaurant||null,section:x.section||null,hours,hourly_rate:rate,wage:hours*rate,other_amount:Number(x.other)||0,signature:x.signature||'Mehedi'});
+ }
+ await cloudPull(month);cloudStatus('☁️ Cloud synced • '+cloudProfile.employee_name);}
+ catch(e){cloudStatus('Cloud sync error: '+e.message);throw e}finally{cloudBusy=false}}
+async function cloudPull(month){let result=await cloudRequest('/duties/month?month='+encodeURIComponent(month));let rows={};(result.records||[]).forEach(r=>{let day=Number(r.duty_date.slice(-2));rows[day]={name:r.employee_name||cloudProfile?.employee_name||$('employee').value,in:r.time_in||'',out:r.time_out||'',restaurant:r.restaurant||'',section:r.section||'',other:r.other_amount==null?'':String(r.other_amount),signature:r.signature||'Mehedi'};});let key=monthKey(),local=JSON.parse(localStorage.getItem(key)||'{}');for(let [day,remote] of Object.entries(rows)){let old=local[day]||{};local[day]={...remote,...Object.fromEntries(Object.entries(old).filter(([k,v])=>v!==''&&v!==null&&v!==undefined))};}
+ localStorage.setItem(key,JSON.stringify(local));load();}
+function setCloudSession(result){cloudSession=result.sessionToken;cloudProfile=result.employee;localStorage.setItem(CLOUD_TOKEN_KEY,cloudSession);localStorage.setItem(CLOUD_PROFILE_KEY,JSON.stringify(cloudProfile));$('cloudName').value=cloudProfile.employee_name;$('cloudLogout').style.display='inline-block';cloudStatus('Signed in as '+cloudProfile.employee_name);cloudPull(`${$('year').value}-${String(+$('month').value+1).padStart(2,'0')}`).then(()=>cloudSyncCurrent(false)).catch(e=>cloudStatus('Cloud error: '+e.message));}
+$('cloudLogin').onclick=async()=>{try{cloudStatus('Signing in…');let r=await cloudRequest('/login','POST',{employeeName:$('cloudName').value.trim(),pin:$('cloudPin').value});setCloudSession(r);$('cloudPin').value='';}catch(e){cloudStatus(e.message)}};
+$('cloudRegister').onclick=async()=>{try{cloudStatus('Registering…');let r=await cloudRequest('/register','POST',{employeeName:$('cloudName').value.trim(),pin:$('cloudPin').value,invitationToken:$('cloudInvite').value.trim()});setCloudSession(r);$('cloudPin').value='';$('cloudInvite').value='';}catch(e){cloudStatus(e.message)}};
+$('cloudLogout').onclick=()=>{cloudSession='';cloudProfile=null;localStorage.removeItem(CLOUD_TOKEN_KEY);localStorage.removeItem(CLOUD_PROFILE_KEY);$('cloudLogout').style.display='none';cloudStatus('Logged out — local entries remain on this phone')};
+if(cloudSession&&cloudProfile){$('cloudName').value=cloudProfile.employee_name;$('cloudLogout').style.display='inline-block';cloudStatus('Saved session • '+cloudProfile.employee_name);}
 function monthKey(){return `mehedi-duty-v2-${$('year').value}-${$('month').value}`}
 function settings(){return JSON.parse(localStorage.getItem('mehedi-duty-settings-v2')||'{}')}
 function saveSettings(){localStorage.setItem('mehedi-duty-settings-v2',JSON.stringify({restaurants,sections,employee:$('employee').value,rate:$('rate').value}))}
 function readRows(){let o={};document.querySelectorAll('#body tr').forEach((tr,i)=>o[i+1]={name:tr.querySelector('.nm').value,in:tr.querySelector('.tin').value,out:tr.querySelector('.tout').value,restaurant:tr.querySelector('.rest').value,section:tr.querySelector('.sect').value,other:tr.querySelector('.other').value,signature:tr.querySelector('.sig').value});return o}
-function saveData(){localStorage.setItem(monthKey(),JSON.stringify(readRows()));saveSettings();try{localStorage.setItem("mehedi-duty-last-snapshot-v1",JSON.stringify({savedAt:new Date().toISOString(),monthKey:monthKey(),rows:readRows()}))}catch(e){console.warn("Local snapshot could not be stored",e)}}
+function saveData(){localStorage.setItem(monthKey(),JSON.stringify(readRows()));saveSettings();try{localStorage.setItem("mehedi-duty-last-snapshot-v1",JSON.stringify({savedAt:new Date().toISOString(),monthKey:monthKey(),rows:readRows()}))}catch(e){console.warn("Local snapshot could not be stored",e)}queueCloudSave()}
 function daysInMonth(){return new Date(+$('year').value,+$('month').value+1,0).getDate()}
 function selectOpts(arr,selected){return `<option value="">Choose…</option>${arr.map(v=>`<option value="${esc(v)}" ${v===selected?'selected':''}>${esc(v)}</option>`).join('')}<option value="__add">＋ Add new option</option>`}
 function load(){
@@ -91,7 +122,11 @@ function load(){
  let saved=JSON.parse(localStorage.getItem(monthKey())||'{}');$('body').innerHTML='';
  for(let d=1;d<=daysInMonth();d++){let x=saved[d]||{},tr=document.createElement('tr');tr.innerHTML=`<td class="day">${String(d).padStart(2,'0')}</td><td class="entry"><input class="nm" value="${esc(x.name??$('employee').value)}"><span class="printtxt"></span></td><td class="entry"><input class="tin" type="time" value="${esc(x.in||'')}"><span class="printtxt"></span></td><td class="entry"><input class="tout" type="time" value="${esc(x.out||'')}"><span class="printtxt"></span></td><td class="hrs amount">0.00</td><td class="entry"><select class="rest">${selectOpts(restaurants,x.restaurant||'')}</select><span class="printtxt"></span></td><td class="entry"><select class="sect">${selectOpts(sections,x.section||'')}</select><span class="printtxt"></span></td><td class="wage amount">0.00</td><td class="entry"><input class="other" type="number" step=".01" placeholder="0.00" value="${esc(x.other||'')}"><span class="printtxt"></span></td><td class="entry"><input class="sig" value="${esc(x.signature??'Mehedi')}"><span class="printtxt"></span></td>`;
  $('body').append(tr);
- tr.querySelectorAll('input,select').forEach(el=>el.addEventListener('change',()=>{if(el.matches('select')&&el.value==='__add'){addInline(el);return}recalc();saveData()}));
+ tr.querySelectorAll('input,select').forEach(el=>{
+  // Save immediately as the user edits, not only when the field loses focus.
+  el.addEventListener('input',()=>{recalc();try{saveData();showSaveState('Saved ✓')}catch(err){showSaveState('Save failed — export backup');console.error(err)}});
+  el.addEventListener('change',()=>{if(el.matches('select')&&el.value==='__add'){addInline(el);return}recalc();try{saveData();showSaveState('Saved ✓')}catch(err){showSaveState('Save failed — export backup');console.error(err)}});
+ });
  }renderLists();recalc();
 }
 function addInline(sel){let type=sel.classList.contains('rest')?'restaurant':'section',v=prompt('Enter new '+type+' name:');if(!v||!v.trim()){sel.value='';return}v=v.trim();let arr=type==='restaurant'?restaurants:sections;if(!arr.includes(v))arr.push(v);sel.innerHTML=selectOpts(arr,v);saveSettings();renderLists();recalc();saveData()}
@@ -102,8 +137,14 @@ function removeOption(type,v){let arr=type==='restaurant'?restaurants:sections;a
 function toast(msg){$('toast').textContent=msg;$('toast').style.display='block';clearTimeout(timer);timer=setTimeout(()=>$('toast').style.display='none',2300)}
 function go(where){$('dashboard').style.display=where==='settings'?'none':'block';$('settings').style.display=where==='settings'?'block':'none';$('pageTitle').textContent=where==='settings'?'Preferences':'Duty Dashboard';document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.textContent.toLowerCase().includes(where==='settings'?'preferences':where==='records'?'monthly':'dashboard')));if(where==='records')document.getElementById('records').scrollIntoView({behavior:'smooth'})}
 $('month').innerHTML=monthNames.map((x,i)=>`<option value="${i}">${x}</option>`).join('');let today=new Date();$('month').value=today.getMonth();$('year').value=today.getFullYear();
-$('month').onchange=()=>{saveData();load()};$('year').onchange=()=>{saveData();load()};$('rate').onchange=()=>{recalc();saveData()};$('employee').onchange=()=>{saveSettings();toast('Employee name saved')};
-$('saveBtn').onclick=()=>{saveData();toast('Monthly record saved on this device')};
+$('month').onchange=()=>{saveData();load();if(cloudSession)cloudSyncCurrent(true).catch(e=>cloudStatus(e.message))};$('year').onchange=()=>{saveData();load();if(cloudSession)cloudSyncCurrent(true).catch(e=>cloudStatus(e.message))};$('rate').onchange=()=>{recalc();saveData()};$('employee').addEventListener('input',()=>{let name=$('employee').value;document.querySelectorAll('#body .nm').forEach(el=>el.value=name);try{saveData();showSaveState('Saved ✓')}catch(e){showSaveState('Save failed')}});$('employee').onchange=()=>{saveSettings();toast('Employee name saved')};
+$('saveBtn').onclick=()=>{try{saveData();toast('Monthly record saved on this device')}catch(e){toast('Could not save. Export a backup.')}};
+function showSaveState(msg){$('saveBtn').textContent=msg}
+// Flush latest edits when the browser/app is backgrounded or the page is hidden.
+window.addEventListener('pagehide',()=>{try{saveData()}catch(e){}});
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'){try{saveData()}catch(e){}}});
+// Lightweight periodic safety save while the page remains open.
+setInterval(()=>{try{saveData()}catch(e){showSaveState('Save failed — export backup')}},5000);
 
 function downloadJSON(data,filename){let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1200)}
 function createBackup(){saveData();let records={};for(let i=0;i<localStorage.length;i++){let k=localStorage.key(i);if(k&&k.startsWith('mehedi-duty-v2-'))records[k]=localStorage.getItem(k)}let payload={app:'Mehedi Duty Manager',formatVersion:1,createdAt:new Date().toISOString(),settings:localStorage.getItem('mehedi-duty-settings-v2')||'{}',records};downloadJSON(payload,`Mehedi-Duty-Backup-${new Date().toISOString().slice(0,10)}.json`);toast(`Backup exported (${Object.keys(records).length} monthly record sets)`)}
@@ -126,10 +167,13 @@ function buildPrintSheet(){
  $('printMonth').textContent=`${monthNames[+$('month').value]} ${$('year').value}`;
  let rows='';
  entered.forEach(x=>{
-  let dept=x.section||x.restaurant,remarks=(x.restaurant&&x.section?x.restaurant+' / '+x.section:'')+(x.other?` • Other: AED ${x.other}`:'');
-  rows+=`<tr><td>${x.sl}</td><td>${esc(x.name||$('employee').value)}</td><td>${esc(x.date)}</td><td>${esc(x.tin)}</td><td>${esc(x.sig||'Mehedi')}</td><td>${esc(dept)}</td><td>${esc(x.tout)}</td><td>${esc(x.sig||'Mehedi')}</td><td>${esc(remarks)}</td></tr>`;
+  let dept=[x.restaurant,x.section].filter(Boolean).join(' / '),remarks=(x.other?`Other: AED ${x.other}`:'');
+  rows+=`<tr><td>${x.sl}</td><td>${esc(x.name||$('employee').value)}</td><td>${esc(x.date)}</td><td>${esc(x.tin)}</td><td>${esc(x.sig||'Mehedi')}</td><td>${esc(x.restaurant)}</td><td>${esc(x.section)}</td><td>${esc(x.tout)}</td><td>${esc(x.sig||'Mehedi')}</td><td>${esc(remarks)}</td></tr>`;
  });
- $('printRows').innerHTML=rows||'<tr><td colspan="9" style="text-align:center;padding:12px">No duty entries completed for this month</td></tr>';
+ $('printRows').innerHTML=rows||'<tr><td colspan="10" style="text-align:center;padding:12px">No duty entries completed for this month</td></tr>';
+ let sumDays=0,sumHours=0,sumWages=0,sumOther=0,rate=Number($('rate').value)||0;
+ document.querySelectorAll('#body tr').forEach(tr=>{let a=tr.querySelector('.tin').value,b=tr.querySelector('.tout').value,h=0;if(a&&b){let [ah,am]=a.split(':').map(Number),[bh,bm]=b.split(':').map(Number),d=bh*60+bm-(ah*60+am);if(d<0)d+=1440;h=d/60;sumDays++;}sumHours+=h;sumWages+=h*rate;sumOther+=Number(tr.querySelector('.other').value)||0;});
+ $('printSummary').innerHTML=`<div>Duty Days: <span>${sumDays}</span></div><div>Total Hours: <span>${sumHours.toFixed(2)}</span></div><div>Calculated Wages: <span>AED ${sumWages.toFixed(2)}</span></div><div>Other Amount: <span>AED ${sumOther.toFixed(2)}</span></div>`;
 }
 $('pdfBtn').onclick=()=>{saveData();buildPrintSheet();window.print()};
 $('addR').onclick=()=>{let v=$('newRestaurant').value.trim();if(v&&!restaurants.includes(v)){restaurants.push(v);saveSettings();$('newRestaurant').value='';load();toast('Restaurant added and saved')}};
